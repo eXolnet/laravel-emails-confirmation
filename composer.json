@@ -1,0 +1,32 @@
+{
+    "name": "exolnet/laravel-emails-confirmation",
+    "description": "Emails confirmation like Laravel native password resets.",
+    "homepage": "http://github.com/exolnet/laravel-emails-confirmation",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patrick Gagnon-Renaud",
+            "email": "pgrenaud@exolnet.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "laravel/framework": "5.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Exolnet\\": "src/Exolnet/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Exolnet\\Auth\\Emails\\EmailServiceProvider"
+            ],
+            "aliases": {
+                "Email": "Exolnet\\Support\\Facades\\Email"
+            }
+        }
+    }
+}
