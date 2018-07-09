@@ -131,13 +131,15 @@ trait ConfirmsEmails
      */
     protected function confirmEmailAndUser($user, $email)
     {
+        $oldEmail = $user->getEmailForEmailConfirmation();
+
         if (!$user->getConfirmedAtForEmailConfirmation()) {
             $user->setConfirmedAtForEmailConfirmation(new Carbon);
         }
         $user->setEmailForEmailConfirmation($email);
         $user->save();
 
-        event(new Confirmed($user));
+        event(new Confirmed($user, $oldEmail));
 
         if (!Auth::check()) {
             $this->guard()->login($user);
