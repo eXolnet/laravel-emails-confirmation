@@ -22,7 +22,7 @@ class EmailServiceProvider extends ServiceProvider
     {
         // Since we act like a native Laravel feature set, we want to publish
         // everything to the application workspace and let the developer extend,
-        // change or rem ove any controllers, configurations, migrations, routes,
+        // change or remove any controllers, configurations, migrations, routes,
         // translations or views.
 
         $publishable = __DIR__ . '/../../../../publishable';
@@ -64,7 +64,26 @@ class EmailServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerRoutesMacro();
         $this->registerPasswordBroker();
+    }
+
+    /**
+     * Register routes macro.
+     *
+     * @param   void
+     * @return  void
+     */
+    protected function registerRoutesMacro()
+    {
+        /** @var \Illuminate\Routing\Router $router */
+        $router = $this->app['router'];
+
+        $router->macro('emails', function () use ($router) {
+            $router->get('confirm', 'Auth\ResendConfirmationController@showLinkRequestForm')->name('email.resend');
+            $router->post('confirm', 'Auth\ResendConfirmationController@resendConfirmLinkEmail');
+            $router->get('confirm/{email}/{token}', 'Auth\ConfirmController@confirm')->name('email.confirm');
+        });
     }
 
     /**
