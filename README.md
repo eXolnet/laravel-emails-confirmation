@@ -61,7 +61,13 @@ php artisan migrate
 
 ## Routes
 
-Add the following routes:
+Invoke the `Route::emails()` macro in your routes file:
+
+```php
+Route::emails();
+```
+
+Or define the following routes explicitly:
 
 ```php
 // Email Confirmation Routes...
@@ -70,7 +76,7 @@ Route::post('confirm', 'Auth\ResendConfirmationController@resendConfirmLinkEmail
 Route::get('confirm/{email}/{token}', 'Auth\ConfirmController@confirm')->name('email.confirm');
 ```
 
-If you want to define explicitly the auth routes instead of using `Route::auth()`, use this:
+If you want to define explicitly the auth routes instead of using the `Route::auth()` macro, use this:
 
 ```php
 // Authentication Routes...
