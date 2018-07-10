@@ -33,7 +33,8 @@ trait AuthenticatesUsers
             return $this->sendLockoutResponse($request);
         }
 
-        if ($this->validateLogin($request)) {
+        // Do not actually attempt to login, only validate
+        if ($this->attemptLogin($request)) {
             $user = $this->guard()->getLastAttempted();
 
             if ($this->validateConfirmed($user)) {
@@ -59,7 +60,7 @@ trait AuthenticatesUsers
      * @param  \Illuminate\Http\Request $request
      * @return bool
      */
-    protected function validateLogin(Request $request)
+    protected function attemptLogin(Request $request)
     {
         return $this->guard()->validate(
             $this->credentials($request)
