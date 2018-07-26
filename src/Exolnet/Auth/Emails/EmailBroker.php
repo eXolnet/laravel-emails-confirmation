@@ -56,6 +56,7 @@ class EmailBroker implements PasswordBrokerContract
         // to this user with a link to confirm their email. We will then redirect back
         // to the current URI having nothing set in the session to indicate errors.
         $user->sendEmailConfirmationNotification(
+            $email,
             $this->tokens->create($user, $email)
         );
 

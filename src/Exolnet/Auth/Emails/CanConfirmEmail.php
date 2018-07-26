@@ -93,11 +93,12 @@ trait CanConfirmEmail
     /**
      * Send the email confirmation notification.
      *
+     * @param  string  $email
      * @param  string  $token
      * @return void
      */
-    public function sendEmailConfirmationNotification($token)
+    public function sendEmailConfirmationNotification($email, $token)
     {
-        $this->notify(new ConfirmEmailNotification($token));
+        $this->notify(new ConfirmEmailNotification($email, $token));
     }
 }
