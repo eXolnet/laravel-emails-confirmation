@@ -1,9 +1,9 @@
 # Laravel Emails Confirmation
 
-[![Travis](https://img.shields.io/travis/eXolnet/laravel-emails-confirmation.svg?style=flat-square)](https://travis-ci.org/eXolnet/laravel-emails-confirmation)
-[![Packagist](https://img.shields.io/packagist/v/eXolnet/laravel-emails-confirmation.svg?style=flat-square)](https://packagist.org/packages/eXolnet/laravel-emails-confirmation)
-[![Downloads](https://img.shields.io/packagist/dt/eXolnet/laravel-emails-confirmation.svg?style=flat-square)](https://packagist.org/packages/eXolnet/laravel-emails-confirmation)
-[![MIT License](https://img.shields.io/badge/license-MIT-8469ad.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
+[![Build Status](https://img.shields.io/travis/eXolnet/:package_name/master.svg?style=flat-square)](https://travis-ci.org/eXolnet/laravel-emails-confirmation)
+[![Latest Release](https://img.shields.io/packagist/v/eXolnet/laravel-emails-confirmation.svg?style=flat-square)](https://packagist.org/packages/eXolnet/laravel-emails-confirmation)
+[![Total Downloads](https://img.shields.io/packagist/dt/eXolnet/laravel-emails-confirmation.svg?style=flat-square)](https://packagist.org/packages/eXolnet/laravel-emails-confirmation)
+[![Software License](https://img.shields.io/badge/license-MIT-8469ad.svg?style=flat-square)](LICENSE)
 
 Emails confirmation like Laravel native password resets.
 
@@ -27,11 +27,13 @@ Install `exolnet/laravel-emails-confirmation` for Laravel 5.5 using composer:
 composer require "exolnet/laravel-emails-confirmation:5.5.*"
 ```
 
-If you are not using auto-discovery add the following provider and facade:
+If you don't use package auto-discovery, add the service provider to the `providers` array in `config/app.php`:
 
 ```php
 Exolnet\Auth\Emails\EmailServiceProvider::class,
 ```
+
+And the facade to the `facades` array in `config/app.php`:
 
 ```php
 'Email' => Exolnet\Support\Facades\Email::class,
@@ -94,3 +96,29 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 ```
+
+## Testing
+
+To run the phpUnit tests, please use:
+
+```bash
+composer test
+```
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE OF CONDUCT](CODE_OF_CONDUCT.md) for details.
+
+## Security
+
+If you discover any security related issues, please email security@exolnet.com instead of using the issue tracker.
+
+## Credits
+
+- [Patrick Gagnon-Renaud](https://github.com/pgrenaud)
+- [All Contributors](../../contributors)
+
+## License
+
+This code is licensed under the [MIT license](http://choosealicense.com/licenses/mit/).
+Please see the [license file](LICENSE) for more information.
