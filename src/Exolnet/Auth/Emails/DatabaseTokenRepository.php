@@ -55,9 +55,13 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * @param  int                                      $expires
      * @return void
      */
-    public function __construct(ConnectionInterface $connection, HasherContract $hasher,
-                                $table, $hashKey, $expires = 60)
-    {
+    public function __construct(
+        ConnectionInterface $connection,
+        HasherContract $hasher,
+        $table,
+        $hashKey,
+        $expires = 60
+    ) {
         $this->table = $table;
         $this->hasher = $hasher;
         $this->hashKey = $hashKey;
@@ -140,7 +144,8 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     public function find(CanConfirmEmailContract $user)
     {
         $record = (array) $this->getTable()->where(
-            'user_id', $user->getIdentifierForEmailConfirmation()
+            'user_id',
+            $user->getIdentifierForEmailConfirmation()
         )->first();
 
         return ($record && ! $this->tokenExpired($record['created_at'])) ? $record : null;

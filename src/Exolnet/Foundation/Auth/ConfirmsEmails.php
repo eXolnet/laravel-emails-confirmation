@@ -34,7 +34,8 @@ trait ConfirmsEmails
         // will update the email on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
         $response = $this->broker()->confirm(
-            $credentials, function ($user, $email) {
+            $credentials,
+            function ($user, $email) {
                 $this->validate2(['email' => $email], $this->confirmRules($user), $this->validationErrorMessages());
                 $this->confirmEmailAndUser($user, $email);
             }

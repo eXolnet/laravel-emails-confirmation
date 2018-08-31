@@ -122,6 +122,8 @@ class AuthDatabaseTokenRepositoryTest extends TestCase
         return new DatabaseTokenRepository(
             m::mock('Illuminate\Database\Connection'),
             m::mock('Illuminate\Contracts\Hashing\Hasher'),
-            'table', 'key');
+            'table',
+            'key'
+        );
     }
 }

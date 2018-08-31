@@ -64,8 +64,10 @@ class ConfirmEmail extends Notification
 
         // Since we want to override the recipient, we have to create our own Mailable instance
         return (new class extends Mailable {
-                public function build() {}
-            })
+            public function build()
+            {
+            }
+        })
             ->to($this->email)
             ->subject('Confirm Email')
             ->markdown($message->markdown, $message->data());

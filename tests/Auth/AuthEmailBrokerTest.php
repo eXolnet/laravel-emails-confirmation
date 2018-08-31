@@ -8,6 +8,9 @@ use Illuminate\Support\Arr;
 use PHPUnit\Framework\TestCase;
 use Exolnet\Contracts\Auth\EmailBroker;
 
+/**
+ * phpcs:disable Generic.Files.LineLength.TooLong
+ */
 class AuthEmailBrokerTest extends TestCase
 {
     public function tearDown()

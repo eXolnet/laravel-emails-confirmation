@@ -4,6 +4,9 @@ namespace Exolnet\Auth\Emails;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * phpcs:disable Generic.Files.LineLength.TooLong
+ */
 class EmailServiceProvider extends ServiceProvider
 {
     /**

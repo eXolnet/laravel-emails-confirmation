@@ -55,7 +55,8 @@ trait SendsEmailConfirmationEmails
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
         $response = $this->broker()->sendConfirmationLink(
-            $user, $request->get('email')
+            $user,
+            $request->get('email')
         );
 
         return $response == Email::CONFIRM_LINK_SENT

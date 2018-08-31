@@ -91,7 +91,8 @@ trait AuthenticatesUsers
     protected function doLogin(Request $request, Authenticatable $user)
     {
         $this->guard()->login(
-            $user, $request->filled('remember')
+            $user,
+            $request->filled('remember')
         );
     }
 
