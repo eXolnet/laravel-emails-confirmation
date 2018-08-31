@@ -4,12 +4,12 @@ namespace Exolnet\Auth\Emails;
 
 use Closure;
 use Exolnet\Contracts\Auth\CanConfirmEmail as CanConfirmEmailContract;
-use Exolnet\Contracts\Auth\EmailBroker as PasswordBrokerContract;
+use Exolnet\Contracts\Auth\EmailBroker as EmailBrokerContract;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Arr;
 use UnexpectedValueException;
 
-class EmailBroker implements PasswordBrokerContract
+class EmailBroker implements EmailBrokerContract
 {
     /**
      * The email token repository.
