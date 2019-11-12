@@ -7,13 +7,14 @@ use Mockery as m;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\TestCase;
 use Exolnet\Contracts\Auth\EmailBroker;
+use UnexpectedValueException;
 
 /**
  * phpcs:disable Generic.Files.LineLength.TooLong
  */
 class AuthEmailBrokerTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -46,12 +47,11 @@ class AuthEmailBrokerTest extends TestCase
         $this->assertEquals(EmailBroker::INVALID_USER, $broker->resendConfirmationLink(['credentials']));
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage User must implement CanConfirmEmail interface.
-     */
     public function testGetUserThrowsExceptionIfUserDoesntImplementCanConfirmEmail()
     {
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionMessage('User must implement CanConfirmEmail interface.');
+
         $broker = $this->getBroker($mocks = $this->getMocks());
         $mocks['users']->shouldReceive('retrieveByCredentials')->once()->with(['foo'])->andReturn('bar');
 

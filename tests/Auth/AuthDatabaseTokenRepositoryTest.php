@@ -9,14 +9,14 @@ use Exolnet\Auth\Emails\DatabaseTokenRepository;
 
 class AuthDatabaseTokenRepositoryTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         Carbon::setTestNow(Carbon::now());
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -37,7 +37,7 @@ class AuthDatabaseTokenRepositoryTest extends TestCase
 
         $results = $repo->create($user, 'email');
 
-        $this->assertInternalType('string', $results);
+        $this->assertIsString($results);
         $this->assertGreaterThan(1, strlen($results));
     }
 
