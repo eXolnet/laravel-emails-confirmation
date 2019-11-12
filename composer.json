@@ -19,14 +19,13 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
-        "laravel/framework": "5.5.*"
+        "php": ">=7.2",
+        "laravel/framework": "^6.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",
-        "orchestra/testbench": "^3.5",
-        "phpunit/phpunit": "^6.0",
-        "squizlabs/php_codesniffer": "^3.2"
+        "phpunit/phpunit": "^8.0",
+        "squizlabs/php_codesniffer": "^3.4"
     },
     "autoload": {
         "psr-4": {
