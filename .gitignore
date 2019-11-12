@@ -2,6 +2,7 @@
 composer.lock
 composer.phar
 phpunit.xml
+.phpunit.result.cache
 .env
 /.idea
 /.vscode
