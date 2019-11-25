@@ -4,7 +4,6 @@ namespace Exolnet\Foundation\Auth;
 
 use Illuminate\Foundation\Auth\ResetsPasswords as BaseResetsPasswords;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\PasswordReset;
 
 trait ResetsPasswords
@@ -20,7 +19,7 @@ trait ResetsPasswords
      */
     protected function resetPassword($user, $password)
     {
-        $user->password = Hash::make($password);
+        $this->setUserPassword($user, $password);
 
         $user->setRememberToken(Str::random(60));
 
