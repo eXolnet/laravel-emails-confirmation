@@ -28,7 +28,7 @@ trait ConfirmsEmails
     {
         $credentials = $this->credentials($request);
 
-        $this->validate2($credentials, $this->requestRules(), $this->validationErrorMessages());
+        $this->validateOrRedirect($credentials, $this->requestRules(), $this->validationErrorMessages());
 
         // Here we will attempt to confirm the user's email. If it is successful we
         // will update the email on an actual user model and persist it to the
@@ -36,7 +36,11 @@ trait ConfirmsEmails
         $response = $this->broker()->confirm(
             $credentials,
             function ($user, $email) {
-                $this->validate2(['email' => $email], $this->confirmRules($user), $this->validationErrorMessages());
+                $this->validateOrRedirect(
+                    ['email' => $email],
+                    $this->confirmRules($user),
+                    $this->validationErrorMessages()
+                );
                 $this->confirmEmailAndUser($user, $email);
             }
         );
@@ -58,7 +62,7 @@ trait ConfirmsEmails
      * @param  array $customAttributes
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function validate2(array $data, array $rules, array $messages = [], array $customAttributes = [])
+    protected function validateOrRedirect(array $data, array $rules, array $messages = [], array $customAttributes = [])
     {
         try {
             Validator::make($data, $rules, $messages, $customAttributes)->validate();
