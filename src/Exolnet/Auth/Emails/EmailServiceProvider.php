@@ -51,6 +51,8 @@ class EmailServiceProvider extends ServiceProvider
         $this->publishes([
             $publishable . '/translations/en/emails.php'    => resource_path('lang/en/emails.php'),
             $publishable . '/translations/en/passwords.php' => resource_path('lang/en/passwords.php'),
+            $publishable . '/translations/fr/emails.php'    => resource_path('lang/fr/emails.php'),
+            $publishable . '/translations/fr/passwords.php' => resource_path('lang/fr/passwords.php'),
         ], 'translations');
 
         $this->publishes([
