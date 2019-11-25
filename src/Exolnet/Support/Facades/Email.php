@@ -39,6 +39,13 @@ class Email extends Facade
     const INVALID_TOKEN = EmailBroker::INVALID_TOKEN;
 
     /**
+     * Constant representing a throttled confirm attempt.
+     *
+     * @var string
+     */
+    const CONFIRM_THROTTLED = EmailBroker::CONFIRM_THROTTLED;
+
+    /**
      * Get the registered name of the component.
      *
      * @return string

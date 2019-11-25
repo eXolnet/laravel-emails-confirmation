@@ -50,6 +50,17 @@ class AuthEmailBrokerTest extends TestCase
         $this->assertEquals(EmailBroker::INVALID_USER, $broker->resendConfirmationLink(['credentials']));
     }
 
+    public function testIfTokenIsRecentlyCreated()
+    {
+        $mocks = $this->getMocks();
+        $mocks['tokens'] = m::mock(TestTokenRepositoryInterface::class);
+        $broker = $this->getMockBuilder('Exolnet\Auth\Emails\EmailBroker')->setMethods()->setConstructorArgs(array_values($mocks))->getMock();
+        $mocks['tokens']->shouldReceive('recentlyCreatedToken')->once()->with($user = m::mock('Exolnet\Contracts\Auth\CanConfirmEmail'))->andReturn(true);
+        $user->shouldReceive('sendEmailConfirmationNotification')->with('token');
+
+        $this->assertEquals(EmailBroker::CONFIRM_THROTTLED, $broker->sendConfirmationLink($user, 'email'));
+    }
+
     public function testGetUserThrowsExceptionIfUserDoesntImplementCanConfirmEmail()
     {
         $this->expectException(UnexpectedValueException::class);
@@ -157,4 +168,12 @@ class AuthEmailBrokerTest extends TestCase
 
         return $mocks;
     }
+}
+
+/**
+ * phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
+ */
+interface TestTokenRepositoryInterface extends TokenRepositoryInterface
+{
+    public function recentlyCreatedToken(CanConfirmEmail $user);
 }

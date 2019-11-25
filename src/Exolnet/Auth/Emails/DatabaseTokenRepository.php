@@ -46,6 +46,13 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     protected $expires;
 
     /**
+     * Minimum number of seconds before re-redefining the token.
+     *
+     * @var int
+     */
+    protected $throttle;
+
+    /**
      * Create a new token repository instance.
      *
      * @param  \Illuminate\Database\ConnectionInterface $connection
@@ -53,6 +60,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * @param  string                                   $table
      * @param  string                                   $hashKey
      * @param  int                                      $expires
+     * @param  int                                      $throttle
      * @return void
      */
     public function __construct(
@@ -60,13 +68,15 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
         HasherContract $hasher,
         $table,
         $hashKey,
-        $expires = 60
+        $expires = 60,
+        $throttle = 60
     ) {
         $this->table = $table;
         $this->hasher = $hasher;
         $this->hashKey = $hashKey;
         $this->expires = $expires * 60;
         $this->connection = $connection;
+        $this->throttle = $throttle;
     }
 
     /**
@@ -160,6 +170,39 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     protected function tokenExpired($createdAt)
     {
         return Carbon::parse($createdAt)->addSeconds($this->expires)->isPast();
+    }
+
+    /**
+     * Determine if the given user recently created a confirm email token.
+     *
+     * @param  \Exolnet\Contracts\Auth\CanConfirmEmail $user
+     * @return bool
+     */
+    public function recentlyCreatedToken(CanConfirmEmailContract $user)
+    {
+        $record = (array) $this->getTable()->where(
+            'user_id',
+            $user->getIdentifierForEmailConfirmation()
+        )->first();
+
+        return $record && $this->tokenRecentlyCreated($record['created_at']);
+    }
+
+    /**
+     * Determine if the token was recently created.
+     *
+     * @param  string  $createdAt
+     * @return bool
+     */
+    protected function tokenRecentlyCreated($createdAt)
+    {
+        if ($this->throttle <= 0) {
+            return false;
+        }
+
+        return Carbon::parse($createdAt)->addSeconds(
+            $this->throttle
+        )->isFuture();
     }
 
     /**

@@ -136,6 +136,7 @@ return [
             'provider' => 'users',
             'table' => 'email_confirmations',
             'expire' => 1440,
+            'throttle' => 60,
         ],
     ],
 

@@ -36,6 +36,13 @@ interface EmailBroker
     const INVALID_TOKEN = 'emails.token';
 
     /**
+     * Constant representing a throttled confirm attempt.
+     *
+     * @var string
+     */
+    const CONFIRM_THROTTLED = 'emails.throttled';
+
+    /**
      * Send an email confirmation link to an email for any user.
      *
      * @param  \Exolnet\Contracts\Auth\CanConfirmEmail|null $user

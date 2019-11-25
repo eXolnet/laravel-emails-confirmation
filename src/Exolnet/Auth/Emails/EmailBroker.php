@@ -51,6 +51,11 @@ class EmailBroker implements EmailBrokerContract
             return static::INVALID_USER;
         }
 
+        if (method_exists($this->tokens, 'recentlyCreatedToken') &&
+            $this->tokens->recentlyCreatedToken($user)) {
+            return static::CONFIRM_THROTTLED;
+        }
+
         // Once we have the confirmation token, we are ready to send the message out
         // to this user with a link to confirm their email. We will then redirect back
         // to the current URI having nothing set in the session to indicate errors.
