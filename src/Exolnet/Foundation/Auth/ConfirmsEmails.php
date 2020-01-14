@@ -159,7 +159,7 @@ trait ConfirmsEmails
      */
     protected function sendConfirmedResponse($response)
     {
-        return redirect($this->redirectPath())
+        return redirect()->intended($this->redirectPath())
                             ->with('status', trans($response));
     }
 
