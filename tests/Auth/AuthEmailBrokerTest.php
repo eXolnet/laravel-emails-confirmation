@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Tests\Auth;
+namespace Exolnet\Tests\Auth;
 
 use Exolnet\Auth\Emails\EmailBroker;
 use Exolnet\Auth\Emails\TokenRepositoryInterface;
