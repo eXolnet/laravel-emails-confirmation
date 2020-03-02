@@ -13,9 +13,7 @@
     "authors": [
         {
             "name": "Patrick Gagnon-Renaud",
-            "email": "pgrenaud@exolnet.com",
-            "homepage": "https://www.exolnet.com",
-            "role": "Developer"
+            "email": "pgrenaud@exolnet.com"
         }
     ],
     "require": {
