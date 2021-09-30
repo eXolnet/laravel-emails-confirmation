@@ -1,8 +1,8 @@
 # Laravel Emails Confirmation
 
-[![Build Status](https://img.shields.io/travis/eXolnet/:package_name/master.svg?style=flat-square)](https://travis-ci.org/eXolnet/laravel-emails-confirmation)
 [![Latest Release](https://img.shields.io/packagist/v/eXolnet/laravel-emails-confirmation.svg?style=flat-square)](https://packagist.org/packages/eXolnet/laravel-emails-confirmation)
 [![Total Downloads](https://img.shields.io/packagist/dt/eXolnet/laravel-emails-confirmation.svg?style=flat-square)](https://packagist.org/packages/eXolnet/laravel-emails-confirmation)
+[![Build Status](https://img.shields.io/github/workflow/status/eXolnet/laravel-emails-confirmation/tests?label=tests&style=flat-square)](https://github.com/eXolnet/laravel-emails-confirmation/actions?query=workflow%3Atests)
 [![Software License](https://img.shields.io/badge/license-MIT-8469ad.svg?style=flat-square)](LICENSE)
 
 Emails confirmation like Laravel native password resets.
