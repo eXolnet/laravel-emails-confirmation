@@ -15,7 +15,8 @@ use Illuminate\Validation\ValidationException;
 
 trait ConfirmsEmails
 {
-    use RedirectsUsers, RedirectsFailures;
+    use RedirectsUsers;
+    use RedirectsFailures;
 
     /**
      * Confirm the given user's email.
@@ -139,7 +140,7 @@ trait ConfirmsEmails
         $oldEmail = $user->getEmailForEmailConfirmation();
 
         if (!$user->getConfirmedAtForEmailConfirmation()) {
-            $user->setConfirmedAtForEmailConfirmation(new Carbon);
+            $user->setConfirmedAtForEmailConfirmation(new Carbon());
         }
         $user->setEmailForEmailConfirmation($email);
         $user->save();

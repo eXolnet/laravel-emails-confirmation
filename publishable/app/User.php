@@ -11,7 +11,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements CanConfirmEmailContract, CanResetPasswordContract
 {
-    use CanConfirmEmail, CanResetPassword, Notifiable;
+    use CanConfirmEmail;
+    use CanResetPassword;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.

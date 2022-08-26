@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 trait RegistersUsers
 {
-    use BaseRegistersUsers, SendsEmailConfirmationEmails;
+    use BaseRegistersUsers;
+    use SendsEmailConfirmationEmails;
 
     /**
      * Handle a registration request for the application.

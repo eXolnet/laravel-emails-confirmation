@@ -15,35 +15,35 @@ class Email extends Facade
      *
      * @var string
      */
-    const CONFIRM_LINK_SENT = EmailBroker::CONFIRM_LINK_SENT;
+    public const CONFIRM_LINK_SENT = EmailBroker::CONFIRM_LINK_SENT;
 
     /**
      * Constant representing a successfully confirmed email.
      *
      * @var string
      */
-    const EMAIL_CONFIRMED = EmailBroker::EMAIL_CONFIRMED;
+    public const EMAIL_CONFIRMED = EmailBroker::EMAIL_CONFIRMED;
 
     /**
      * Constant representing the user not found response.
      *
      * @var string
      */
-    const INVALID_USER = EmailBroker::INVALID_USER;
+    public const INVALID_USER = EmailBroker::INVALID_USER;
 
     /**
      * Constant representing an invalid token.
      *
      * @var string
      */
-    const INVALID_TOKEN = EmailBroker::INVALID_TOKEN;
+    public const INVALID_TOKEN = EmailBroker::INVALID_TOKEN;
 
     /**
      * Constant representing a throttled confirm attempt.
      *
      * @var string
      */
-    const CONFIRM_THROTTLED = EmailBroker::CONFIRM_THROTTLED;
+    public const CONFIRM_THROTTLED = EmailBroker::CONFIRM_THROTTLED;
 
     /**
      * Get the registered name of the component.
