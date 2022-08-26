@@ -12,35 +12,35 @@ interface EmailBroker
      *
      * @var string
      */
-    const CONFIRM_LINK_SENT = 'emails.sent';
+    public const CONFIRM_LINK_SENT = 'emails.sent';
 
     /**
      * Constant representing a successfully confirmed email.
      *
      * @var string
      */
-    const EMAIL_CONFIRMED = 'emails.confirmed';
+    public const EMAIL_CONFIRMED = 'emails.confirmed';
 
     /**
      * Constant representing the user not found response.
      *
      * @var string
      */
-    const INVALID_USER = 'emails.user';
+    public const INVALID_USER = 'emails.user';
 
     /**
      * Constant representing an invalid token.
      *
      * @var string
      */
-    const INVALID_TOKEN = 'emails.token';
+    public const INVALID_TOKEN = 'emails.token';
 
     /**
      * Constant representing a throttled confirm attempt.
      *
      * @var string
      */
-    const CONFIRM_THROTTLED = 'emails.throttled';
+    public const CONFIRM_THROTTLED = 'emails.throttled';
 
     /**
      * Send an email confirmation link to an email for any user.

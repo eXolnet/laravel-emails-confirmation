@@ -54,10 +54,10 @@ class ConfirmEmail extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url(config('app.url').
+        $url = url(config('app.url') .
             route('email.confirm', [urlencode($notifiable->getEmailForEmailConfirmation()), $this->token], false));
 
-        $message = (new MailMessage)
+        $message = (new MailMessage())
             ->line('You are receiving this email because we received an email confirmation request for your account.')
             ->action('Confirm Email', $url)
             ->line('If you did not request an email confirmation, no further action is required.');

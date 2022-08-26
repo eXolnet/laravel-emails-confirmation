@@ -51,8 +51,10 @@ class EmailBroker implements EmailBrokerContract
             return static::INVALID_USER;
         }
 
-        if (method_exists($this->tokens, 'recentlyCreatedToken') &&
-            $this->tokens->recentlyCreatedToken($user)) {
+        if (
+            method_exists($this->tokens, 'recentlyCreatedToken') &&
+            $this->tokens->recentlyCreatedToken($user)
+        ) {
             return static::CONFIRM_THROTTLED;
         }
 

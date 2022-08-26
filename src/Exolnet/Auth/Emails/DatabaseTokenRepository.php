@@ -127,7 +127,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
             'user_id'    => $id,
             'email'      => $email,
             'token'      => $this->hasher->make($token),
-            'created_at' => new Carbon
+            'created_at' => new Carbon()
         ];
     }
 
