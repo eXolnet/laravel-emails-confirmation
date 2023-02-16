@@ -9,9 +9,18 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.0, 8.1]
+        php: [8.0, 8.1, 8.2]
         laravel: [9.*]
         dependency-version: [prefer-lowest, prefer-stable]
+        exclude:
+          - php: 8.2
+            laravel: 9.*
+            dependency-version: prefer-lowest
+        include:
+          # Laravel only support PHP 8.2 from v9.43
+          - php: 8.2
+            laravel: ^9.43
+            dependency-version: prefer-lowest
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
@@ -34,6 +43,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
       - name: Execute tests
