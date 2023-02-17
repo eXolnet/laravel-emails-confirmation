@@ -22,7 +22,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "laravel/framework": "^9.0"
+        "laravel/framework": "^9.0|^10.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.4",

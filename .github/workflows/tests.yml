@@ -10,12 +10,14 @@ jobs:
       fail-fast: true
       matrix:
         php: [8.0, 8.1, 8.2]
-        laravel: [9.*]
+        laravel: [9.*, 10.*]
         dependency-version: [prefer-lowest, prefer-stable]
         exclude:
           - php: 8.2
             laravel: 9.*
             dependency-version: prefer-lowest
+          - php: 8.0
+            laravel: 10.*
         include:
           # Laravel only support PHP 8.2 from v9.43
           - php: 8.2
