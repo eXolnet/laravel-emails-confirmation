@@ -25,7 +25,7 @@ class AuthEmailBrokerTest extends TestCase
     public function testIfUserIsNotFoundErrorRedirectIsReturnedWhenSending()
     {
         $mocks = $this->getMocks();
-        $broker = $this->getMockBuilder(EmailBroker::class)->setMethods(['getUser', 'makeErrorRedirect'])->setConstructorArgs(array_values($mocks))->getMock();
+        $broker = $this->getMockBuilder(EmailBroker::class)->onlyMethods(['getUser'])->setConstructorArgs(array_values($mocks))->getMock();
 
         $this->assertEquals(EmailBroker::INVALID_USER, $broker->sendConfirmationLink(null, 'email'));
     }
@@ -33,8 +33,8 @@ class AuthEmailBrokerTest extends TestCase
     public function testIfUserIsNotFoundErrorRedirectIsReturnedWhenResending()
     {
         $mocks = $this->getMocks();
-        $broker = $this->getMockBuilder(EmailBroker::class)->setMethods(['getUser', 'makeErrorRedirect'])->setConstructorArgs(array_values($mocks))->getMock();
-        $broker->expects($this->once())->method('getUser')->will($this->returnValue(null));
+        $broker = $this->getMockBuilder(EmailBroker::class)->onlyMethods(['getUser'])->setConstructorArgs(array_values($mocks))->getMock();
+        $broker->expects($this->once())->method('getUser')->willReturn(null);
 
         $this->assertEquals(EmailBroker::INVALID_USER, $broker->resendConfirmationLink(['credentials']));
     }
@@ -42,9 +42,9 @@ class AuthEmailBrokerTest extends TestCase
     public function testIfUserIsNotFoundErrorRedirectIsReturnedWhenUserIsAlreadyConfirmed()
     {
         $mocks = $this->getMocks();
-        $broker = $this->getMockBuilder(EmailBroker::class)->setMethods(['getUser', 'makeErrorRedirect'])->setConstructorArgs(array_values($mocks))->getMock();
+        $broker = $this->getMockBuilder(EmailBroker::class)->onlyMethods(['getUser'])->setConstructorArgs(array_values($mocks))->getMock();
         $user = m::mock(CanConfirmEmail::class);
-        $broker->expects($this->once())->method('getUser')->will($this->returnValue($user));
+        $broker->expects($this->once())->method('getUser')->willReturn($user);
         $user->shouldReceive('getConfirmedAtForEmailConfirmation')->once()->andReturn(Carbon::now());
 
         $this->assertEquals(EmailBroker::INVALID_USER, $broker->resendConfirmationLink(['credentials']));
@@ -54,7 +54,7 @@ class AuthEmailBrokerTest extends TestCase
     {
         $mocks = $this->getMocks();
         $mocks['tokens'] = m::mock(TestTokenRepositoryInterface::class);
-        $broker = $this->getMockBuilder('Exolnet\Auth\Emails\EmailBroker')->setMethods()->setConstructorArgs(array_values($mocks))->getMock();
+        $broker = $this->getMockBuilder('Exolnet\Auth\Emails\EmailBroker')->onlyMethods([])->setConstructorArgs(array_values($mocks))->getMock();
         $mocks['tokens']->shouldReceive('recentlyCreatedToken')->once()->with($user = m::mock('Exolnet\Contracts\Auth\CanConfirmEmail'))->andReturn(true);
         $user->shouldReceive('sendEmailConfirmationNotification')->with('token');
 
@@ -83,7 +83,7 @@ class AuthEmailBrokerTest extends TestCase
     public function testBrokerCreatesTokenAndRedirectsWithoutErrorWhenSending()
     {
         $mocks = $this->getMocks();
-        $broker = $this->getMockBuilder(EmailBroker::class)->setMethods()->setConstructorArgs(array_values($mocks))->getMock();
+        $broker = $this->getMockBuilder(EmailBroker::class)->onlyMethods([])->setConstructorArgs(array_values($mocks))->getMock();
         $user = m::mock(CanConfirmEmail::class);
         $mocks['tokens']->shouldReceive('create')->once()->with($user, 'email')->andReturn('token');
         $user->shouldReceive('sendEmailConfirmationNotification')->with('email', 'token');
@@ -94,7 +94,7 @@ class AuthEmailBrokerTest extends TestCase
     public function testBrokerCreatesTokenAndRedirectsWithoutErrorWhenResending()
     {
         $mocks = $this->getMocks();
-        $broker = $this->getMockBuilder(EmailBroker::class)->setMethods()->setConstructorArgs(array_values($mocks))->getMock();
+        $broker = $this->getMockBuilder(EmailBroker::class)->onlyMethods([])->setConstructorArgs(array_values($mocks))->getMock();
         $mocks['users']->shouldReceive('retrieveByCredentials')->once()->with(['foo'])->andReturn($user = m::mock(CanConfirmEmail::class));
         $mocks['tokens']->shouldReceive('create')->once()->with($user, 'email')->andReturn('token');
         $user->shouldReceive('getConfirmedAtForEmailConfirmation')->once()->andReturn(null);
@@ -116,7 +116,7 @@ class AuthEmailBrokerTest extends TestCase
     public function testRedirectReturnedByRemindWhenRecordDoesntExistInTable()
     {
         $creds = ['token' => 'token'];
-        $broker = $this->getMockBuilder(EmailBroker::class)->setMethods()->setConstructorArgs(array_values($mocks = $this->getMocks()))->getMock();
+        $broker = $this->getMockBuilder(EmailBroker::class)->onlyMethods([])->setConstructorArgs(array_values($mocks = $this->getMocks()))->getMock();
         $mocks['users']->shouldReceive('retrieveByCredentials')->once()->with(Arr::except($creds, ['token']))->andReturn($user = m::mock(CanConfirmEmail::class));
         $mocks['tokens']->shouldReceive('exists')->with($user, 'token')->andReturn(false);
 
@@ -127,7 +127,7 @@ class AuthEmailBrokerTest extends TestCase
     public function testIfEmailConfirmedRedirectIsReturned()
     {
         $creds = ['token' => 'token'];
-        $broker = $this->getMockBuilder(EmailBroker::class)->setMethods()->setConstructorArgs(array_values($mocks = $this->getMocks()))->getMock();
+        $broker = $this->getMockBuilder(EmailBroker::class)->onlyMethods([])->setConstructorArgs(array_values($mocks = $this->getMocks()))->getMock();
         $mocks['users']->shouldReceive('retrieveByCredentials')->once()->with(Arr::except($creds, ['token']))->andReturn($user = m::mock(CanConfirmEmail::class));
         $mocks['tokens']->shouldReceive('exists')->with($user, 'token')->andReturn(true);
         $mocks['tokens']->shouldReceive('find')->once()->with($user)->andReturn(['email' => 'email']);
@@ -140,8 +140,8 @@ class AuthEmailBrokerTest extends TestCase
     public function testConfirmRemovesRecordOnReminderTableAndCallsCallback()
     {
         unset($_SERVER['__email.confirm.test']);
-        $broker = $this->getMockBuilder(EmailBroker::class)->setMethods(['validateConfirm'])->setConstructorArgs(array_values($mocks = $this->getMocks()))->getMock();
-        $broker->expects($this->once())->method('validateConfirm')->will($this->returnValue($user = m::mock(CanConfirmEmail::class)));
+        $broker = $this->getMockBuilder(EmailBroker::class)->onlyMethods(['validateConfirm'])->setConstructorArgs(array_values($mocks = $this->getMocks()))->getMock();
+        $broker->expects($this->once())->method('validateConfirm')->willReturn($user = m::mock(CanConfirmEmail::class));
         $mocks['tokens']->shouldReceive('find')->once()->with($user)->andReturn(['email' => 'email']);
         $mocks['tokens']->shouldReceive('delete')->once()->with($user);
         $callback = function ($user, $email) {

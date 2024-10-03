@@ -21,12 +21,12 @@
         }
     ],
     "require": {
-        "php": "^8.1",
-        "laravel/framework": "^10.0"
+        "php": "8.2.*|8.3.*",
+        "laravel/framework": "^10.0|^11.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.4",
-        "phpunit/phpunit": "^9.3.3",
+        "phpunit/phpunit": "^11.3",
         "squizlabs/php_codesniffer": "^3.6"
     },
     "autoload": {
