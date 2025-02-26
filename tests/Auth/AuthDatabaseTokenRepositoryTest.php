@@ -2,33 +2,25 @@
 
 namespace Exolnet\Tests\Auth;
 
+use Exolnet\Auth\Emails\DatabaseTokenRepository;
 use Exolnet\Contracts\Auth\CanConfirmEmail;
+use Exolnet\Tests\UnitTestCase;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Database\Connection;
-use Mockery as m;
 use Illuminate\Support\Carbon;
-use PHPUnit\Framework\TestCase;
-use Exolnet\Auth\Emails\DatabaseTokenRepository;
+use Mockery as m;
 use stdClass;
 
 /**
  * phpcs:disable Generic.Files.LineLength.TooLong
  */
-class AuthDatabaseTokenRepositoryTest extends TestCase
+class AuthDatabaseTokenRepositoryTest extends UnitTestCase
 {
     public function setUp(): void
     {
         parent::setUp();
 
         Carbon::setTestNow(Carbon::now());
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        m::close();
-        Carbon::setTestNow(null);
     }
 
     public function testCreateInsertsNewRecordIntoTable()

@@ -5,23 +5,18 @@ namespace Exolnet\Tests\Auth;
 use Exolnet\Auth\Emails\EmailBroker;
 use Exolnet\Auth\Emails\TokenRepositoryInterface;
 use Exolnet\Contracts\Auth\CanConfirmEmail;
+use Exolnet\Tests\UnitTestCase;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Mockery as m;
-use Illuminate\Support\Arr;
-use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
 
 /**
  * phpcs:disable Generic.Files.LineLength.TooLong
  */
-class AuthEmailBrokerTest extends TestCase
+class AuthEmailBrokerTest extends UnitTestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testIfUserIsNotFoundErrorRedirectIsReturnedWhenSending()
     {
         $mocks = $this->getMocks();
