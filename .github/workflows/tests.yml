@@ -1,6 +1,6 @@
 name: tests
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   tests:
@@ -10,10 +10,20 @@ jobs:
       fail-fast: true
       matrix:
         php: [8.2, 8.3, 8.4, 8.5]
-        laravel: [11.*, 12.*]
+        laravel: [11.*, 12.*, 13.*]
+        phpunit: [11.*, 12.*]
         dependency-version: [prefer-lowest, prefer-stable]
+        exclude:
+          - laravel: 11.*
+            phpunit: 12.*
+          - laravel: 12.*
+            phpunit: 12.*
+          - laravel: 13.*
+            phpunit: 11.*
+          - laravel: 13.*
+            php: 8.2
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - U${{ matrix.phpunit }} - ${{ matrix.dependency-version }}
 
     steps:
       - name: Checkout code
@@ -28,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+          composer require "laravel/framework:${{ matrix.laravel }}" "phpunit/phpunit:${{ matrix.phpunit }}" --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
       - name: Execute tests
